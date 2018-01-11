@@ -1,0 +1,8 @@
+-documentado https://docs.dhtmlx.com/gantt/api__refs__gantt_props.html
+-requiere de el dhtmlxgantt.js y dhtmlxgantt.js para funcionar
+-soporta jquery
+-cdn, bower, nuget, npm disponible
+-soporta modo touch
+-carga datos json,sml
+-se configura en un objeto .config
+-diferentes tamaños del layout
