@@ -8,7 +8,12 @@
 
 	<!-- lenguaje -->
 	<script src="codebase/locale/locale_es.js" charset="utf-8"></script>
+	<!-- marker -->
 	<script src="codebase/ext/dhtmlxgantt_marker.js" type="text/javascript" charset="utf-8"></script>
+	<!-- full screen -->
+	<script src="codebase/ext/dhtmlxgantt_fullscreen.js" type="text/javascript" charset="utf-8"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<!-- data -->
 	<script type="text/javascript" src="samples/common/testdata.js"></script>
 	<style type="text/css">
 		html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
@@ -17,6 +22,25 @@
 		}
 		.finsh_line{
 			background-color: red;	
+		}
+		.gantt-fullscreen{
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+			width: 30px;
+			height: 30px;
+			padding: 2px;
+			font-size: 32px;
+			background: transparent;
+			cursor: pointer;
+			opacity: 0.5;
+			text-align: center;
+			-webkit-transition:background-color 0.5s, opacity 0.5s;
+			transition:background-color 0.5s, opacity 0.5s;
+		}
+		.gantt-fullscreen:hover{
+			background: rgba(150, 150, 150, 0.5);
+			opacity: 1;
 		}
 	</style>
 </head>
@@ -79,6 +103,34 @@
 		gantt.templates.task_text=function(start,end,task,date){
 			return "<b>Text:</b> "+task.text+",<b> Duration:</b> "+task.duration;
 		};
+		//full screen
+		gantt.attachEvent("onTemplatesReady", function(){
+		var toggle = document.createElement("i");
+		toggle.className = "fa fa-expand gantt-fullscreen";
+		gantt.toggleIcon = toggle;
+		gantt.$container.appendChild(toggle);
+		toggle.onclick = function() {
+			if (!gantt.getState().fullscreen) {
+				gantt.expand();
+			}
+			else {
+				gantt.collapse();
+			}
+		};
+		});
+		gantt.attachEvent("onExpand", function(){
+			var icon = gantt.toggleIcon;
+			if(icon){
+				icon.className = icon.className.replace("fa-expand", "fa-compress");
+			}
+
+		});
+		gantt.attachEvent("onCollapse", function(){
+			var icon = gantt.toggleIcon;
+			if(icon){
+				icon.className = icon.className.replace("fa-compress", "fa-expand");
+			}
+		});
 		
 		gantt.init("gantt_here");
 		//gantt.parse(tasks);
