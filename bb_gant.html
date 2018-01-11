@@ -8,9 +8,16 @@
 
 	<!-- lenguaje -->
 	<script src="codebase/locale/locale_es.js" charset="utf-8"></script>
+	<script src="codebase/ext/dhtmlxgantt_marker.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="samples/common/testdata.js"></script>
 	<style type="text/css">
 		html, body{ height:100%; padding:0px; margin:0px; overflow: hidden;}
+		.status_line{
+			background-color: #0ca30a;
+		}
+		.finsh_line{
+			background-color: red;	
+		}
 	</style>
 </head>
 <body>
@@ -18,20 +25,43 @@
 	<script type="text/javascript">
         var tasks =  {
             data:[
-                {id:1, text:"Facware", start_date:"01-01-2017", duration:18,order:10,
+                {id:1, text:"Facware", start_date:"01-01-2018", duration:18,order:10,
                     progress:0.8, open: true},
-                {id:2, text:"Task #1", 	  start_date:"02-01-2017", duration:8, order:10,
+                {id:2, text:"Task #1", 	  start_date:"02-01-2018", duration:8, order:10,
                     progress:0.9, parent:1},
-                {id:3, text:"Task #2",    start_date:"11-01-2017", duration:8, order:20,
+                {id:3, text:"Task #2",    start_date:"11-01-2018", duration:8, order:20,
                     progress:0.2, parent:1}
             ],
                     links:[
             { id:1, source:1, target:2, type:"1"},
             { id:2, source:2, target:3, type:"0"}
-        ]
+        	]
         };
+        // marcadores
+		var date_to_str = gantt.date.date_to_str(gantt.config.task_date);
+		var today = new Date(2018, 3, 5);
+		gantt.addMarker({
+			start_date: today,
+			css: "today",
+			text: "Today",
+			title:"Today: "+ date_to_str(today)
+		});
 
-		gantt.init("gantt_here");
+		var start = new Date(2018, 2, 28);
+		gantt.addMarker({
+			start_date: start,
+			css: "status_line",
+			text: "Start project",
+			title:"Start project: "+ date_to_str(start)
+		});
+
+		var finish = new Date(2018, 3, 14);
+		gantt.addMarker({
+			start_date: finish,
+			css: "finsh_line",
+			text: "Finish project",
+			title:"Finish project: "+ date_to_str(start)
+		});
 
 		//gantt.config.scale_unit = "day"; //escala: year, mounth, day, hour, minute
 
@@ -49,7 +79,10 @@
 		gantt.templates.task_text=function(start,end,task,date){
 			return "<b>Text:</b> "+task.text+",<b> Duration:</b> "+task.duration;
 		};
-		gantt.parse(tasks);
+		
+		gantt.init("gantt_here");
+		//gantt.parse(tasks);
+		gantt.parse(demo_tasks);
 
 	</script>
 </body>
