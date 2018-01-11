@@ -18,11 +18,11 @@
 	<script type="text/javascript">
         var tasks =  {
             data:[
-                {id:1, text:"Facware", start_date:"01-04-2017", duration:18,order:10,
+                {id:1, text:"Facware", start_date:"01-01-2017", duration:18,order:10,
                     progress:0.8, open: true},
-                {id:2, text:"Task #1", 	  start_date:"02-04-2017", duration:8, order:10,
+                {id:2, text:"Task #1", 	  start_date:"02-01-2017", duration:8, order:10,
                     progress:0.9, parent:1},
-                {id:3, text:"Task #2",    start_date:"11-04-2017", duration:8, order:20,
+                {id:3, text:"Task #2",    start_date:"11-01-2017", duration:8, order:20,
                     progress:0.2, parent:1}
             ],
                     links:[
@@ -33,9 +33,18 @@
 
 		gantt.init("gantt_here");
 
-		gantt.config.scale_unit = "day"; //escala: year, mounth, day, hour, minute
-		gantt.config.step = 1;
-		gantt.config.date_scale = "%D, %Y";
+		//gantt.config.scale_unit = "day"; //escala: year, mounth, day, hour, minute
+
+		gantt.config.scale_unit = "month";
+		gantt.config.date_scale = "%F, %Y";
+		// tamaño de cabecera
+		gantt.config.scale_height = 50;
+		gantt.config.subscales = [
+			{unit:"day", step:1, date:"%j, %D" }
+		];
+
+		//gantt.config.step = 1;
+		//gantt.config.date_scale = "%D, %Y";
 		//object templates
 		gantt.templates.task_text=function(start,end,task,date){
 			return "<b>Text:</b> "+task.text+",<b> Duration:</b> "+task.duration;
